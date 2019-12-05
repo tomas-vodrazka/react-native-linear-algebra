@@ -1,3 +1,4 @@
+import "@tensorflow/tfjs-node";
 import { TensorFlowSolver } from "../TensorFlowSolver";
 import { NumericSolver } from "../NumericSolver";
 import { getTestCases } from "../../LinearSystemTestCasesProvider";
@@ -18,10 +19,11 @@ describe("Solvers", () => {
     getTestCases().forEach((testCase, index) => {
       solvers.forEach(solver => {
         it(`Solver ${solver.name} solves test case number #${index +
-          1}`, () => {
-          const actual = solver.solver.solve(testCase.x, testCase.y);
+          1}`, async () => {
+          const actual = await solver.solver.solve(testCase.x, testCase.y);
 
           expect(actual.w.length).toBe(testCase.w.length);
+          console.log(actual.performance.totalTime);
           actual.w.forEach((val, i) => {
             expect(val).toBeCloseTo(testCase.w[i]);
           });

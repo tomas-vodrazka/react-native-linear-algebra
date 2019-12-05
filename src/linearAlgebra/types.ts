@@ -18,7 +18,7 @@ export enum LinearSystemSolverType {
 
 export interface LinearSystemSolver {
   // solves x*w = y
-  solve: (x: number[][], y: number[]) => SolverResult;
+  solve: (x: number[][], y: number[]) => Promise<SolverResult>;
 }
 
 export interface LinearSystemTestCase {

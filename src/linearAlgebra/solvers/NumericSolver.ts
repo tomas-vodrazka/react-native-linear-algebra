@@ -5,7 +5,7 @@ import { LinearSystemSolver, SolverResult } from "../types";
 
 const LAMBDA = 0;
 
-export function solve(x: number[][], y: number[]): SolverResult {
+export async function solve(x: number[][], y: number[]): Promise<SolverResult> {
   const start = dayjs();
   const xT = numeric.transpose(x);
   const product = numeric.dot(xT, x) as number[][];
