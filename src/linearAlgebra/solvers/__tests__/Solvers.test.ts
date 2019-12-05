@@ -23,7 +23,6 @@ describe("Solvers", () => {
           const actual = await solver.solver.solve(testCase.x, testCase.y);
 
           expect(actual.w.length).toBe(testCase.w.length);
-          console.log(actual.performance.totalTime);
           actual.w.forEach((val, i) => {
             expect(val).toBeCloseTo(testCase.w[i]);
           });
