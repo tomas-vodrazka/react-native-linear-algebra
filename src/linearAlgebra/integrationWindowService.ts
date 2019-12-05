@@ -1,11 +1,6 @@
 import { zeros } from "mathjs";
 
-const INTEGRATION_WINDOW_SIZE = 16;
-
-export function useIntegrationWindow(
-  x: number[][],
-  n: number = INTEGRATION_WINDOW_SIZE
-): number[][] {
+export function useIntegrationWindow(x: number[][], n: number): number[][] {
   const numOfRows = x.length;
   const numOfCols = x[0].length;
   const output = zeros([numOfRows, numOfCols * (n + 1)]) as number[][];
