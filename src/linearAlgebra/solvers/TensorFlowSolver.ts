@@ -1,13 +1,11 @@
 import numeric from "numeric";
-import dayjs from "dayjs";
 import { flatten } from "mathjs";
 import * as tf from "@tensorflow/tfjs";
-import { LinearSystemSolver, SolverResult } from "../types";
+import { LinearSystemSolver } from "../types";
 
 const LAMBDA = 0;
 
-export async function solve(x: number[][], y: number[]): Promise<SolverResult> {
-  const start = dayjs();
+export async function solve(x: number[][], y: number[]): Promise<number[]> {
   const tf_x = tf.tensor(x);
   const tf_xT = tf.transpose(tf_x);
   const xT = numeric.transpose(x);
@@ -19,14 +17,8 @@ export async function solve(x: number[][], y: number[]): Promise<SolverResult> {
   const yMul = numeric.dot(xT, y) as number[];
   const w = numeric.solve(withLambda, yMul);
   const flat = flatten(w) as number[];
-  const end = dayjs();
 
-  return {
-    w: flat,
-    performance: {
-      totalTime: end.diff(start, "ms")
-    }
-  };
+  return flat;
 }
 
 export const TensorFlowSolver: LinearSystemSolver = {

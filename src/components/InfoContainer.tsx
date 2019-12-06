@@ -6,10 +6,11 @@ import "@tensorflow/tfjs-react-native";
 import { LinearSystemSolverType } from "../linearAlgebra/types";
 import { InfoControlsView } from "./InfoControlsView";
 import { InfoResultView } from "./InfoResultView";
+import { testSolver } from "./InfoContainerService";
 
 interface InfoContainerState {
-  results: number[];
-  isReady: boolean;
+  times: number[];
+  correlations: number[];
   isRunning: boolean;
   numberOfRows: string;
   solverType: LinearSystemSolverType;
@@ -18,27 +19,18 @@ interface InfoContainerState {
 
 export class InfoContainer extends React.Component<{}, InfoContainerState> {
   state = {
-    results: [],
-    isReady: false,
+    times: [],
+    correlations: [],
     isRunning: false,
     numberOfRows: "100",
     solverType: LinearSystemSolverType.NUMERIC,
     errorMessage: null
   };
 
-  componentDidMount() {
-    this.initTensorFlow();
-  }
-
-  initTensorFlow = async () => {
-    await tf.ready();
+  handleStartClick = async () => {
     this.setState({
-      isReady: true
-    });
-  };
-
-  handleStartClick = () => {
-    this.setState({
+      times: [],
+      correlations: [],
       isRunning: true,
       errorMessage: null
     });
@@ -51,6 +43,22 @@ export class InfoContainer extends React.Component<{}, InfoContainerState> {
       });
       return;
     }
+
+    await tf.ready();
+    setTimeout(() => {
+      testSolver({
+        rows,
+        cols: 16,
+        runs: 3,
+        solverType: this.state.solverType
+      }).then(({ correlations, times }) => {
+        this.setState({
+          correlations,
+          times,
+          isRunning: false
+        });
+      });
+    });
   };
 
   handleNumberOfRowsChange = (numberOfRows: string) => {
@@ -61,29 +69,21 @@ export class InfoContainer extends React.Component<{}, InfoContainerState> {
 
   handleSolverTypeChange = (solverType: LinearSystemSolverType.NUMERIC) => {
     this.setState({
-      solverType,
-      results: []
+      solverType
     });
   };
 
   render() {
-    if (!this.state.isReady) {
-      return (
-        <View style={styles.container}>
-          <Text>Loading</Text>
-        </View>
-      );
-    }
-
     return (
       <View style={styles.container}>
-        <View>
+        <View style={styles.results}>
           <InfoResultView
             errorMessage={this.state.errorMessage}
-            results={this.state.results}
+            times={this.state.times}
+            correlations={this.state.correlations}
           />
         </View>
-        <View style={styles.results}>
+        <View style={styles.controls}>
           <InfoControlsView
             onStartClick={this.handleStartClick}
             solverType={this.state.solverType}
@@ -102,15 +102,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    alignItems: "center",
     justifyContent: "flex-end",
     padding: 10
   },
   results: {
-    marginBottom: 20,
+    marginBottom: 50,
     width: "100%"
   },
   controls: {
-    flexDirection: "row"
+    width: "100%"
   }
 });

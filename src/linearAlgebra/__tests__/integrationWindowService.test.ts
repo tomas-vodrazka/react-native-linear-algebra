@@ -1,4 +1,4 @@
-import { useIntegrationWindow } from "../integrationWindowService";
+import { useIntegrationWindow } from "../IntegrationWindowService";
 
 describe("integrationWindowService", () => {
   describe("useIntegrationWindow", () => {
