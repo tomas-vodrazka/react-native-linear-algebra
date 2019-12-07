@@ -1,24 +1,26 @@
-import * as mathjs from "mathjs";
+import * as tf from "@tensorflow/tfjs";
 import { LinearSystem } from "./types";
-
-function createMathjsContext(seed?: string) {
-  if (!seed) {
-    return mathjs;
-  }
-
-  return mathjs.create(mathjs.all, {
-    randomSeed: seed
-  });
-}
 
 export function getRandomLinearSystem(
   rows: number,
   cols: number,
   seed?: string
 ): LinearSystem {
-  const math = createMathjsContext(seed);
+  const tf_x = tf.randomUniform(
+    [rows, cols],
+    undefined,
+    undefined,
+    undefined,
+    seed
+  );
+  const tf_y = tf.randomUniform([rows], undefined, undefined, undefined, seed);
+  const x = tf_x.arraySync();
+  const y = tf_y.arraySync();
+  tf_x.dispose();
+  tf_y.dispose();
+
   return {
-    x: math.random([rows, cols]) as number[][],
-    y: math.random([rows]) as number[]
+    x: x as number[][],
+    y: y as number[]
   };
 }

@@ -42,8 +42,16 @@ export const InfoControlsView: React.FC<InfoControlsViewProps> = props => {
             value={LinearSystemSolverType.NUMERIC}
           />
           <Picker.Item
-            label="TensorFlow"
-            value={LinearSystemSolverType.TENSOR_FLOW}
+            label="TensorFlow MatMul"
+            value={LinearSystemSolverType.TENSOR_FLOW_MAT_MUL}
+          />
+          <Picker.Item
+            label="TensorFlow API"
+            value={LinearSystemSolverType.TENSOR_FLOW_API}
+          />
+          <Picker.Item
+            label="TensorFlow Gradient"
+            value={LinearSystemSolverType.TENSOR_FLOW_GRAD}
           />
         </Picker>
       </View>

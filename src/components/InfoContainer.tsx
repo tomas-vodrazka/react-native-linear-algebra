@@ -1,6 +1,5 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import * as tf from "@tensorflow/tfjs";
 import "@tensorflow/tfjs-react-native";
 
 import { LinearSystemSolverType } from "../linearAlgebra/types";
@@ -23,7 +22,7 @@ export class InfoContainer extends React.Component<{}, InfoContainerState> {
     correlations: [],
     isRunning: false,
     numberOfRows: "100",
-    solverType: LinearSystemSolverType.NUMERIC,
+    solverType: LinearSystemSolverType.TENSOR_FLOW_GRAD,
     errorMessage: null
   };
 
@@ -44,7 +43,6 @@ export class InfoContainer extends React.Component<{}, InfoContainerState> {
       return;
     }
 
-    await tf.ready();
     setTimeout(() => {
       testSolver({
         rows,

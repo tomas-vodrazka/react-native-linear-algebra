@@ -2,6 +2,7 @@ import dayjs from "dayjs";
 import jStat from "jstat";
 import { round } from "mathjs";
 import numeric from "numeric";
+import * as tf from "@tensorflow/tfjs";
 import {
   LinearSystemSolverType,
   LinearSystemSolver,
@@ -33,6 +34,8 @@ export async function testSolver({
   solverType,
   runs
 }: TestParams): Promise<TestsResults> {
+  await tf.ready();
+  // console.log(tf.ENV.features);
   const solver = getLinearSolver(solverType);
   const times = [];
   const correlations = [];

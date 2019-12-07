@@ -4,8 +4,10 @@ export interface LinearSystem {
 }
 
 export enum LinearSystemSolverType {
-  "TENSOR_FLOW" = "TENSOR_FLOW",
-  "NUMERIC" = "NUMERIC"
+  TENSOR_FLOW_MAT_MUL = "TENSOR_FLOW_MAT_MUL",
+  TENSOR_FLOW_GRAD = "TENSOR_FLOW_GRAD",
+  TENSOR_FLOW_API = "TENSOR_FLOW_API",
+  NUMERIC = "NUMERIC"
 }
 
 export interface LinearSystemSolver {
