@@ -1,5 +1,4 @@
 import numeric from "numeric";
-import { flatten } from "mathjs";
 import * as tf from "@tensorflow/tfjs";
 import { LinearSystemSolver } from "../types";
 
@@ -19,9 +18,8 @@ export async function solve(x: number[][], y: number[]): Promise<number[]> {
   const withLambda = numeric.add(product, lambdaMatrix);
   const yMul = numeric.dot(xT, y) as number[];
   const w = numeric.solve(withLambda, yMul);
-  const flat = flatten(w) as number[];
 
-  return flat;
+  return w;
 }
 
 export const TensorFlowMatMulSolver: LinearSystemSolver = {

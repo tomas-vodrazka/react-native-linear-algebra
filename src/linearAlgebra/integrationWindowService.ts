@@ -1,9 +1,16 @@
-import { zeros } from "mathjs";
+function getZerosMatrix(rows: number, cols: number): number[][] {
+  const matrix = new Array(rows);
+  for (let r = 0; r < rows; r += 1) {
+    matrix[r] = new Array(cols).fill(0);
+  }
+
+  return matrix;
+}
 
 export function useIntegrationWindow(x: number[][], n: number): number[][] {
   const numOfRows = x.length;
   const numOfCols = x[0].length;
-  const output = zeros([numOfRows, numOfCols * (n + 1)]) as number[][];
+  const output = getZerosMatrix(numOfRows, numOfCols * (n + 1));
 
   for (let c = 0; c < numOfCols; c += 1) {
     for (let r = numOfRows - 1; r >= 0; r -= 1) {
