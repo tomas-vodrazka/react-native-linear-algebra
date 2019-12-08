@@ -2,7 +2,7 @@ import * as tf from "@tensorflow/tfjs";
 import { LinearSystemSolver } from "../types";
 
 const LEARNING_RATE = 0.05;
-const NUM_OF_LOOPS = 100;
+const NUM_OF_LOOPS = 1000;
 
 export async function solve(x: number[][], y: number[]): Promise<number[]> {
   const tf_y = tf.tensor(y);
@@ -10,7 +10,6 @@ export async function solve(x: number[][], y: number[]): Promise<number[]> {
   const w = tf.variable(
     tf.randomUniform([x[0].length], null, null, null, "grad")
   );
-  // const w = tf.variable(tf.tensor([1, 1]));
 
   const loss = (estW: tf.Tensor) => {
     return tf_x

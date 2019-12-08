@@ -1,6 +1,37 @@
-import { useIntegrationWindow } from "../IntegrationWindowService";
+import {
+  useIntegrationWindow,
+  getLinearSystemMeanSquareError,
+  getSquareError
+} from "../MatrixService";
 
 describe("integrationWindowService", () => {
+  describe("getSquareError", () => {
+    it("returns square error", () => {
+      const y = [8, 8];
+      const estimatedY = [6, 6];
+
+      const actual = getSquareError(y, estimatedY);
+
+      expect(actual).toBe(8);
+    });
+  });
+
+  describe("getMeanSquareError", () => {
+    it("returns mean square error", () => {
+      const x = [
+        [1, 2],
+        [1, 2]
+      ];
+
+      const y = [8, 8];
+      const w = [2, 2];
+
+      const actual = getLinearSystemMeanSquareError(x, y, w);
+
+      expect(actual).toBe(4);
+    });
+  });
+
   describe("useIntegrationWindow", () => {
     it("returns a framed matrix", () => {
       const x = [

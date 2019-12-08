@@ -10,6 +10,7 @@ import { testSolver } from "./InfoContainerService";
 interface InfoContainerState {
   times: number[];
   correlations: number[];
+  msErrors: number[];
   isRunning: boolean;
   numberOfRows: string;
   solverType: LinearSystemSolverType;
@@ -20,9 +21,10 @@ export class InfoContainer extends React.Component<{}, InfoContainerState> {
   state = {
     times: [],
     correlations: [],
+    msErrors: [],
     isRunning: false,
     numberOfRows: "100",
-    solverType: LinearSystemSolverType.TENSOR_FLOW_GRAD,
+    solverType: LinearSystemSolverType.NUMERIC,
     errorMessage: null
   };
 
@@ -30,6 +32,7 @@ export class InfoContainer extends React.Component<{}, InfoContainerState> {
     this.setState({
       times: [],
       correlations: [],
+      msErrors: [],
       isRunning: true,
       errorMessage: null
     });
@@ -47,12 +50,13 @@ export class InfoContainer extends React.Component<{}, InfoContainerState> {
       testSolver({
         rows,
         cols: 16,
-        runs: 3,
+        runs: 1,
         solverType: this.state.solverType
-      }).then(({ correlations, times }) => {
+      }).then(({ correlations, times, msErrors }) => {
         this.setState({
           correlations,
           times,
+          msErrors,
           isRunning: false
         });
       });
@@ -79,6 +83,7 @@ export class InfoContainer extends React.Component<{}, InfoContainerState> {
             errorMessage={this.state.errorMessage}
             times={this.state.times}
             correlations={this.state.correlations}
+            msErrors={this.state.msErrors}
           />
         </View>
         <View style={styles.controls}>

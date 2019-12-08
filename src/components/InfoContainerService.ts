@@ -8,7 +8,8 @@ import {
   LinearSystemSolver,
   getLinearSolver,
   getRandomLinearSystem,
-  useIntegrationWindow
+  useIntegrationWindow,
+  getSquareError
 } from "../linearAlgebra";
 
 interface TestParams {
@@ -21,11 +22,13 @@ interface TestParams {
 interface TestsResults {
   times: number[];
   correlations: number[];
+  msErrors: number[];
 }
 
 interface TestResult {
   time: number;
   correlation: number;
+  msError: number;
 }
 
 export async function testSolver({
@@ -39,17 +42,20 @@ export async function testSolver({
   const solver = getLinearSolver(solverType);
   const times = [];
   const correlations = [];
+  const msErrors = [];
 
   for (let i = 0; i < runs; i += 1) {
     const { x, y } = getRandomLinearSystem(rows, cols, `tets_${i}`);
-    const { correlation, time } = await performTest(x, y, solver);
+    const { correlation, time, msError } = await performTest(x, y, solver);
     times.push(time);
     correlations.push(correlation);
+    msErrors.push(msError);
   }
 
   return {
     times,
-    correlations
+    correlations,
+    msErrors
   };
 }
 
@@ -67,9 +73,11 @@ async function performTest(
 
   const end = dayjs();
   const time = end.diff(start, "ms");
+  const msError = getSquareError(y, estimatedY) / X.length;
 
   return {
     correlation: round(correlation, 2) as number,
-    time
+    time,
+    msError: round(msError, 3)
   };
 }

@@ -1,3 +1,5 @@
+import numeric from "numeric";
+
 function getZerosMatrix(rows: number, cols: number): number[][] {
   const matrix = new Array(rows);
   for (let r = 0; r < rows; r += 1) {
@@ -25,4 +27,24 @@ export function useIntegrationWindow(x: number[][], n: number): number[][] {
   }
 
   return output;
+}
+
+export function getLinearSystemMeanSquareError(
+  x: number[][],
+  y: number[],
+  w: number[]
+): number {
+  const estimatedY = numeric.dot(x, w) as number[];
+  const error = getSquareError(y, estimatedY);
+
+  return error / x.length;
+}
+
+export function getSquareError(y: number[], estimatedY: number[]): number {
+  let sum = 0;
+  for (let i = 0; i < y.length; i += 1) {
+    sum += Math.pow(y[i] - estimatedY[i], 2);
+  }
+
+  return sum;
 }

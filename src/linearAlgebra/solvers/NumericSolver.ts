@@ -1,7 +1,7 @@
 import numeric from "numeric";
 import { LinearSystemSolver } from "../types";
 
-const LAMBDA = 0;
+const LAMBDA = 0.01;
 
 export async function solve(x: number[][], y: number[]): Promise<number[]> {
   const xT = numeric.transpose(x);

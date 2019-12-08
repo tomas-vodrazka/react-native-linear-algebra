@@ -34,7 +34,7 @@ export const InfoControlsView: React.FC<InfoControlsViewProps> = props => {
         <Text>Solver type</Text>
         <Picker
           selectedValue={props.solverType}
-          style={{ height: 50, width: "100%" }}
+          style={{ width: "100%" }}
           onValueChange={props.onSolverTypeChange}
         >
           <Picker.Item

@@ -13,7 +13,7 @@ export async function solve(x: number[][], y: number[]): Promise<number[]> {
   const tf_y = tf.tensor(y);
   const tf_x = tf.tensor(x);
   // Train for 5 epochs.
-  for (let epoch = 0; epoch < 100; epoch++) {
+  for (let epoch = 0; epoch < 1000; epoch++) {
     optimizer.minimize(() => {
       const predYs = model(tf_x);
       const loss = tf.losses.meanSquaredError(tf_y, predYs);

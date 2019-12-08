@@ -1,11 +1,11 @@
 import React from "react";
 import { Text } from "react-native";
 import { mean, round } from "lodash";
-import jStat from "jstat";
 
 interface InfoResultViewProps {
   times: number[];
   correlations: number[];
+  msErrors: number[];
   errorMessage?: string;
 }
 
@@ -26,9 +26,9 @@ export const InfoResultView: React.FC<InfoResultViewProps> = props => {
     <>
       <Text>Runs: {props.times.length}</Text>
       <Text>Avg: {round(mean(props.times), 2)}</Text>
-      <Text>Std: {round(jStat.std(props.times), 2)}</Text>
       <Text>Times(ms): {props.times.join(", ")}</Text>
       <Text>Correlations: {props.correlations.join(", ")}</Text>
+      <Text>MSE: {props.msErrors.join(", ")}</Text>
     </>
   );
 };
