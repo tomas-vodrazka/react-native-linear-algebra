@@ -50,7 +50,7 @@ export class InfoContainer extends React.Component<{}, InfoContainerState> {
       testSolver({
         rows,
         cols: 16,
-        runs: 1,
+        runs: 3,
         solverType: this.state.solverType
       }).then(({ correlations, times, msErrors }) => {
         this.setState({

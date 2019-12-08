@@ -38,7 +38,9 @@ export async function testSolver({
   runs
 }: TestParams): Promise<TestsResults> {
   await tf.ready();
+  // tf.setBackend("cpu");
   // console.log(tf.ENV.features);
+  // console.log(tf.getBackend());
   const solver = getLinearSolver(solverType);
   const times = [];
   const correlations = [];
